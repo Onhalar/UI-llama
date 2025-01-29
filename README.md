@@ -1,4 +1,4 @@
-*To start, run the setup bat, you'll need to have Ollama client already installed*
+*To start, run the setup bat, you'll need to have Ollama client and python already installed as per dependencies*
 
 ___
 
