@@ -1,24 +1,18 @@
-import chat
-import setup
-import utils
+import chat, setup, utils, os
 
-chat.init()
+# just to make sure for edge cases
+import os
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-print("select a model: ", chat.get_available_models())
+setup.run()
 
-while True:
-    try:
-        chat.select_model(input(">>> "))
-        break
-    except ValueError:
-        pass
-
-print("\n\n")
+if not chat.is_running():
+    chat.init()
 
 while True:
     response = ""
 
-    prompt = input(">>> ")
+    prompt = input(f"({chat.model}) >>> ")
 
     if prompt.lower().strip() == "quit":
         utils.Exit()

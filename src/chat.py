@@ -1,12 +1,15 @@
-import ollama
-import subprocess
-
-import utils
+import ollama, subprocess, utils
 
 history = []
 model = ""
 
 ollama_process: subprocess.Popen
+
+def is_running() -> bool:
+    try:
+        return ollama_process.poll() is None
+    except NameError:
+        return False
 
 def init() -> None:
     global ollama_process
@@ -37,7 +40,10 @@ def update_history(content: str, role: str = 'assistant'):
 def import_model(model: str):
     ollama.pull(model)
 
-def select_model(selected_model: str):
+def remove_model(model: str):
+    ollama.delete(model)
+
+def set_model(selected_model: str):
     models = get_available_models()
 
     if models == []:
