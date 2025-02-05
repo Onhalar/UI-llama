@@ -18,9 +18,11 @@ def update_text(output: Text, text: str, smooth = False, wait = 0.01):
     if smooth:
         for letter in text:
             output.insert(END, letter)
+            output.see(END)
             sleep(0.01)
     else:
         output.insert(END, text)
+        output.see(END)
     output.config(state=DISABLED)
 
 def message(output: Text, user_input: Text):
@@ -34,7 +36,6 @@ def message(output: Text, user_input: Text):
     for chunk in chat.get_responce(prompt, chat.model):
         part = chunk['message']['content']
         update_text(output, part, smooth= True, wait=0.0075)
-        output.see(END)
         response += part
 
     chat.update_history(response)
