@@ -58,9 +58,7 @@ def run() -> None:
 
     Button(container, text='Select', command= lambda window = main, model = model_selector : _return(window, model) ).grid(column=1, row=1)
 
-    #spacers
-    Label(container, text="-----").grid(column=0, row=2, sticky='W', pady= 5)
-    Label(container, text="-----").grid(column=1, row=2, sticky='E', pady= 5)
+    Separator(container, orient='horizontal').grid(column=0, row=2, columnspan=2, pady= 15, sticky='EW')
 
     selected_model = Entry(container)
     selected_model.grid(column=0, row=3, columnspan=2, sticky='EW')
