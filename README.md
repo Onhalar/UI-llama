@@ -14,7 +14,7 @@ ___
 * Navigate to the *'src'* directory
 * run *'main.py'* file
 
-**HOW TO USE:*
+**HOW TO USE:**
 * When you open the app select a model of your choice.
 * If not available, copy and paste code from Ollama and hit import. (https://ollama.com/search)
 * Hit the *'select'* button.
