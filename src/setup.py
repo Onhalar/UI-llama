@@ -7,8 +7,10 @@ from threading import Thread
 import os
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-def _return(window: Tk, model: Combobox) -> None: # '_' means an internal function and it should not be visible outside of this file
+def _return(window: Tk, model: Combobox, labels_to_update: tuple[Label]) -> None: # '_' means an internal function and it should not be visible outside of this file
     chat.set_model(model.get())
+    for label in labels_to_update:
+        label.config(text=chat.model)
     utils.Exit(window)
 
 def _import_model(options_menu: Combobox, model: Entry):
@@ -33,14 +35,14 @@ def _remove_model(model: Entry):
     except Exception as e:
         utils.show_error(e)
 
-def forceExitSetup(window: Tk):
+def force_exit_setup(window: Tk):
     if chat.model != "":
         utils.Exit(window)
     else:
         utils.show_error("No model selected, exitting app...")
         utils.Exit()
 
-def run() -> None:
+def run(*labels_to_update: Label) -> None:
     global models
 
     if not chat.is_running():
@@ -50,7 +52,7 @@ def run() -> None:
     main.iconbitmap(PhotoImage('../res/setup.ico'))
     main.title('UI-llama setup')
     main.resizable(False, False)
-    main.protocol('WM_DELETE_WINDOW', lambda window = main : forceExitSetup(window))
+    main.protocol('WM_DELETE_WINDOW', lambda window = main : force_exit_setup(window))
 
     container = Frame(main)
 
@@ -63,7 +65,7 @@ def run() -> None:
 
     model_selector.set('[NO MODELS FOUND]' if len(models) == 0 else models[0])
 
-    Button(container, text='Select', command= lambda window = main, model = model_selector : _return(window, model) ).grid(column=1, row=1)
+    Button(container, text='Select', command= lambda window = main, model = model_selector: _return(window, model, labels_to_update) ).grid(column=1, row=1)
 
     Separator(container, orient='horizontal').grid(column=0, row=2, columnspan=2, pady= 15, sticky='EW')
 

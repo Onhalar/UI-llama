@@ -8,11 +8,6 @@ from threading import Thread
 import os
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-setup.run()
-
-if not chat.is_running():
-    chat.init()
-
 def update_text(output: Text, text: str, smooth = False, wait = 0.01):
     output.config(state=NORMAL)
     if smooth:
@@ -58,7 +53,8 @@ def UI():
     separator.columnconfigure(index=0, weight=1)
 
     Separator(separator, orient='horizontal').grid(column=0, row=0, sticky='EW')
-    Label(separator, text=chat.model).grid(column=1, row=0)
+    model_display = Label(separator, text=chat.model)
+    model_display.grid(column=1, row=0)
 
     separator.grid(column=0, row=1, columnspan=3, sticky='EW')
 
@@ -66,7 +62,7 @@ def UI():
     user_input.grid(column=0, row=2, columnspan=2, rowspan=2, sticky='NS')
 
     Button(container, text='send', command= lambda : Thread(target= lambda output = output, user_input = user_input : message(output, user_input)).start()).grid(column=2, row=2, padx=5)
-    Button(container, text='options', command=setup.run).grid(column=2, row=3, padx=5)
+    Button(container, text='options', command= lambda: setup.run(model_display)).grid(column=2, row=3, padx=5)
 
     container.pack(pady=5, padx=5)
 
@@ -74,4 +70,6 @@ def UI():
 
 
 if __name__ == '__main__':
+    setup.run()
+
     UI()
