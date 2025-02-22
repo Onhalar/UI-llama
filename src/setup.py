@@ -33,6 +33,13 @@ def _remove_model(model: Entry):
     except Exception as e:
         utils.show_error(e)
 
+def forceExitSetup(window: Tk):
+    if chat.model != "":
+        utils.Exit(window)
+    else:
+        utils.show_error("No model selected, exitting app...")
+        utils.Exit()
+
 def run() -> None:
     global models
 
@@ -43,7 +50,7 @@ def run() -> None:
     main.iconbitmap(PhotoImage('../res/setup.ico'))
     main.title('UI-llama setup')
     main.resizable(False, False)
-    main.protocol('WM_DELETE_WINDOW', lambda window = main : utils.Exit(window))
+    main.protocol('WM_DELETE_WINDOW', lambda window = main : forceExitSetup(window))
 
     container = Frame(main)
 

@@ -39,7 +39,7 @@ def message(output: Text, user_input: Text):
         response += part
 
     chat.update_history(response)
-    update_text(output, "\n\n--END\n\n", smooth= True)
+    update_text(output, "\n<END>\n\n", smooth= True)
 
 def UI():
     main = Tk()
